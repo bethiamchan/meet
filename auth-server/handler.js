@@ -1,5 +1,5 @@
 const { google } = require('googleapis');
-const OAuth2 = google.auth.OAuth2;
+// const OAuth2 = google.auth.OAuth2;
 const calendar = google.calendar('v3');
 // SCOPES set access levels
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
@@ -31,7 +31,6 @@ module.exports.getAuthURL = async () => {
 		statusCode: 200,
 		headers: {
 			'Access-Control-Allow-Origin': '*',
-			// "Access-Control-Allow-Credentials": true,
 		},
 		body: JSON.stringify({
 			authUrl: authUrl,
