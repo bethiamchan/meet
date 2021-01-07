@@ -1,5 +1,5 @@
-import { mockData } from './mock-data';
 import axios from 'axios';
+import { mockData } from './mock-data';
 import NProgress from 'nprogress';
 
 export const extractLocations = (events) => {
@@ -19,6 +19,12 @@ const checkToken = async (accessToken) => {
 export const getEvents = async () => {
 	NProgress.start();
 
+	// if (!navigator.onLine && !window.location.href.startsWith('http://localhost')) {
+	// 	const events = localStorage.getItem('lastEvents');
+	// 	NProgress.done();
+	// 	return JSON.parse(events).events;
+	// }
+
 	if (window.location.href.startsWith('http://localhost')) {
 		NProgress.done();
 		return mockData;
@@ -28,10 +34,10 @@ export const getEvents = async () => {
 
 	if (token) {
 		removeQuery();
-		const url = 'https://e8m96hh453.execute-api.us-east-1.amazonaws.com/dev/api/get-events/' + token;
+		const url = `https://e8m96hh453.execute-api.us-east-1.amazonaws.com/dev/api/get-events/${token}`;
 		const result = await axios.get(url);
 		if (result.data) {
-			var locations = extractLocations(result.data.events);
+			let locations = extractLocations(result.data.events);
 			localStorage.setItem('lastEvents', JSON.stringify(result.data));
 			localStorage.setItem('locations', JSON.stringify(locations));
 		}
@@ -42,9 +48,7 @@ export const getEvents = async () => {
 
 export const getAccessToken = async () => {
 	const accessToken = localStorage.getItem('access_token');
-
 	const tokenCheck = accessToken && (await checkToken(accessToken));
-
 	if (!accessToken || tokenCheck.error) {
 		await localStorage.removeItem('access_token');
 		const searchParams = new URLSearchParams(window.location.search);
@@ -54,7 +58,7 @@ export const getAccessToken = async () => {
 			const { authUrl } = results.data;
 			return (window.location.href = authUrl);
 		}
-		return code && getToken;
+		return code && getToken(code);
 	}
 	return accessToken;
 };
@@ -71,7 +75,7 @@ const removeQuery = () => {
 
 const getToken = async (code) => {
 	const encodeCode = encodeURIComponent(code);
-	const { access_token } = await fetch('https://e8m96hh453.execute-api.us-east-1.amazonaws.com/dev/api/token/' + encodeCode)
+	const { access_token } = await fetch(`https://e8m96hh453.execute-api.us-east-1.amazonaws.com/dev/api/token/${encodeCode}`)
 		.then((res) => {
 			return res.json();
 		})

@@ -1,5 +1,5 @@
 const { google } = require('googleapis');
-// const OAuth2 = google.auth.OAuth2;
+const OAuth2 = google.auth.OAuth2;
 const calendar = google.calendar('v3');
 // SCOPES set access levels
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
@@ -30,7 +30,11 @@ module.exports.getAuthURL = async () => {
 	return {
 		statusCode: 200,
 		headers: {
+			'X-Requested-With': '*',
+			'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with',
 			'Access-Control-Allow-Origin': '*',
+			// 'Access-Control-Allow-Methods': 'POST,GET,OPTIONS',
+			// "Access-Control-Allow-Credentials": true,
 		},
 		body: JSON.stringify({
 			authUrl: authUrl,
@@ -59,7 +63,10 @@ module.exports.getAccessToken = async (event) => {
 			return {
 				statusCode: 200,
 				headers: {
+					'X-Requested-With': '*',
+					'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with',
 					'Access-Control-Allow-Origin': '*',
+					// 'Access-Control-Allow-Methods': 'POST,GET,OPTIONS',
 				},
 				body: JSON.stringify(token),
 			};
@@ -103,7 +110,10 @@ module.exports.getCalendarEvents = async (event) => {
 			return {
 				statusCode: 200,
 				headers: {
+					'X-Requested-With': '*',
+					'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with',
 					'Access-Control-Allow-Origin': '*',
+					// 'Access-Control-Allow-Methods': 'POST,GET,OPTIONS',
 				},
 				body: JSON.stringify({
 					events: results.data.items,
