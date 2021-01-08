@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class NumberOfEvents extends Component {
 	state = {
@@ -22,5 +23,12 @@ class NumberOfEvents extends Component {
 		);
 	}
 }
+
+NumberOfEvents.propTypes = {
+	updateEvents: PropTypes.func,
+};
+NumberOfEvents.defaultProps = {
+	updateEvents: () => {},
+};
 
 export default NumberOfEvents;
