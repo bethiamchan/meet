@@ -22,7 +22,10 @@ export const getEvents = async () => {
 	if (!navigator.onLine && !window.location.href.startsWith('http://localhost')) {
 		const events = localStorage.getItem('lastEvents');
 		NProgress.done();
-		return JSON.parse(events).events;
+		return {
+			events: JSON.parse(events).events,
+			locations: extractLocations(JSON.parse(events).events),
+		};
 	}
 
 	if (window.location.href.startsWith('http://localhost')) {
