@@ -28,10 +28,10 @@ class App extends Component {
 		}
 
 		const { currentLocation, numberOfEvents } = this.state;
-
+		//probably change eventS to events.events, but events.filter might be fine
 		if (location) {
 			getEvents().then((events) => {
-				const locationEvents = location === 'all' ? events : events.filter((event) => event.location === location);
+				const locationEvents = location === 'all' ? events.events : events.events.filter((event) => event.location === location);
 				const filteredEvents = locationEvents.slice(0, numberOfEvents);
 				return this.setState({
 					events: filteredEvents,
@@ -41,7 +41,7 @@ class App extends Component {
 			});
 		} else {
 			getEvents().then((events) => {
-				const locationEvents = currentLocation === 'all' ? events : events.filter((event) => event.location === currentLocation);
+				const locationEvents = currentLocation === 'all' ? events.events : events.events.filter((event) => event.location === currentLocation);
 				const filteredEvents = locationEvents.slice(0, eventCount);
 				if (this.mounted) {
 					return this.setState({
@@ -59,8 +59,8 @@ class App extends Component {
 		getEvents().then((events) => {
 			if (this.mounted) {
 				this.setState({
-					events: events,
-					locations: extractLocations(events),
+					events: events.events,
+					locations: events.locations,
 				});
 			}
 		});

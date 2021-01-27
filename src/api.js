@@ -21,9 +21,13 @@ export const getEvents = async () => {
 
 	if (!navigator.onLine && !window.location.href.startsWith('http://localhost')) {
 		const storedevents = localStorage.getItem('lastEvents');
+		const storedlocations = localStorage.getItem('locations');
 		NProgress.done();
-		return JSON.parse(storedevents).events;
-
+		//should go back to previous structure
+		return {
+			events: JSON.parse(storedevents).events,
+			locations: JSON.parse(storedlocations),
+		};
 	}
 
 	if (window.location.href.startsWith('http://localhost')) {
@@ -37,13 +41,19 @@ export const getEvents = async () => {
 		removeQuery();
 		const url = `https://e8m96hh453.execute-api.us-east-1.amazonaws.com/dev/api/get-events/${token}`;
 		const result = await axios.get(url);
+		console.log(result.data);
+		console.log(result.data.events);
 		if (result.data) {
 			let locations = extractLocations(result.data.events);
 			localStorage.setItem('lastEvents', JSON.stringify(result.data));
 			localStorage.setItem('locations', JSON.stringify(locations));
 		}
 		NProgress.done();
-		return result.data.events;
+		//should return result.data or .events and .data
+		return {
+			events: result.data.events,
+			locations: extractLocations(result.data.events)
+		};
 	}
 };
 
