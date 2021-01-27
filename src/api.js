@@ -20,12 +20,10 @@ export const getEvents = async () => {
 	NProgress.start();
 
 	if (!navigator.onLine && !window.location.href.startsWith('http://localhost')) {
-		const events = localStorage.getItem('lastEvents');
+		const storedevents = localStorage.getItem('lastEvents');
 		NProgress.done();
-		return {
-			events: JSON.parse(events).events,
-			locations: extractLocations(JSON.parse(events).events),
-		};
+		return JSON.parse(storedevents).events;
+
 	}
 
 	if (window.location.href.startsWith('http://localhost')) {

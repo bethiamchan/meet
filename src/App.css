@@ -47,7 +47,7 @@ input[type='number'] {
 }
 
 .suggestions {
-	width: inherit;
+	width: 250px;
 	padding: .1rem;
 	align-self: center;
 	margin: 0 auto;
