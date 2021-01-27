@@ -23,7 +23,7 @@ export const getEvents = async () => {
 		const storedevents = localStorage.getItem('lastEvents');
 		const storedlocations = localStorage.getItem('locations');
 		NProgress.done();
-		//should go back to previous structure
+
 		return {
 			events: JSON.parse(storedevents).events,
 			locations: JSON.parse(storedlocations),
@@ -49,10 +49,10 @@ export const getEvents = async () => {
 			localStorage.setItem('locations', JSON.stringify(locations));
 		}
 		NProgress.done();
-		//should return result.data or .events and .data
+
 		return {
 			events: result.data.events,
-			locations: extractLocations(result.data.events)
+			locations: extractLocations(result.data.events),
 		};
 	}
 };

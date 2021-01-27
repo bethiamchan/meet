@@ -5,7 +5,7 @@ import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import { OfflineAlert } from './Alert';
-import { extractLocations, getEvents } from './api';
+import { getEvents } from './api';
 
 class App extends Component {
 	state = {
@@ -28,7 +28,6 @@ class App extends Component {
 		}
 
 		const { currentLocation, numberOfEvents } = this.state;
-		//probably change eventS to events.events, but events.filter might be fine
 		if (location) {
 			getEvents().then((events) => {
 				const locationEvents = location === 'all' ? events.events : events.events.filter((event) => event.location === location);
