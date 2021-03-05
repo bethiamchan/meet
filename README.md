@@ -1,7 +1,7 @@
 # **meet-app**
 This project is a React PWA that uses the Google Calendar API. It fetches events so people can view a list of upcoming events and see data visualization charts about these events.
 
-### [The application is deployed here, but your email must be added to a test list to gain access.](https://bethiamchan.github.io/meet/)
+### [The application is deployed here, but your email address must be added to a testing list to gain access.](https://bethiamchan.github.io/meet/)
 
 
 # Demo
